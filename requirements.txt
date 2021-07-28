@@ -1,0 +1,7 @@
+dj-database-url==0.5.2
+Django==3.2.5
+django-widget-tweaks==1.4.8
+PyMySQL==1.0.2
+Markdown==3.3.4
+python-decouple==3.4
+sqlparse==0.4.1

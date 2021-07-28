@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from decouple import config, Csv
+import dj_database_url
 from pathlib import Path
 import os
 
@@ -24,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ez^x9w53)jsm83i%qvfs_asn5$k9u%@ttf-_*jpy@-$9+y9@yv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
 ALLOWED_HOSTS = ['testserver','localhost']
 
@@ -87,6 +89,7 @@ DATABASES = {
     }
 }
 '''
+'''
 DATABASES = { 
     'default': 
     { 
@@ -98,6 +101,7 @@ DATABASES = {
         'PASSWORD': '1qa2ws3ed', # 数据库密码
     }  
 }
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -153,3 +157,12 @@ LOGIN_URL = 'login'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 # EMAIL_FILE_PATH = '/' # change this to a proper location
+
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+DATABASES = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
+}
